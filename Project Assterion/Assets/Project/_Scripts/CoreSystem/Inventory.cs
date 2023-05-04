@@ -5,6 +5,8 @@ public class Inventory : MonoBehaviour
 {
     [SerializeField] private List<InventoryItem> _inventorySlots;
 
+    public List<InventoryItem> GetInventory => _inventorySlots;
+
     private void Start()
     {
         _inventorySlots = new List<InventoryItem>();

@@ -3,36 +3,35 @@ using UnityEngine;
 [SelectionBase]
 public class PlayerManager : MonoBehaviour
 {
+    private Inputs input;
+
     public Inventory playerInventory;
-
-    [Header("Test")] public ItemData test;
-
+    
+    private PlayerMovement _playerMovement;
+    
+    [Header("Test")]
+    public ItemData test;
     public ItemData test2;
     public ItemData test3;
-
-    private PlayerMovement _playerMovement;
-    private Input input;
+    
 
 
     private void Awake()
     {
         _playerMovement = GetComponent<PlayerMovement>();
         playerInventory = GetComponent<Inventory>();
-
-
-        DontDestroyOnLoad(gameObject);
+        
+        
+        DontDestroyOnLoad(this.gameObject);
     }
 
     private void Start()
     {
-        input = new Input();
+        input = new Inputs();
         input.Enable();
-    }
 
+        
 
-    private void FixedUpdate()
-    {
-        _playerMovement.Move(input.Player.Movement.ReadValue<Vector2>());
     }
 
     [ContextMenu("Addto Inventoyr")]
@@ -44,11 +43,19 @@ public class PlayerManager : MonoBehaviour
         playerInventory.AddItem(test2);
         playerInventory.AddItem(test2);
         playerInventory.AddItem(test3);
-    }
 
+    }
+    
     [ContextMenu("Remove Inventoyr")]
     public void RemoveToInvenotryTest()
     {
         playerInventory.RemoveItem(test);
+
+    }
+
+
+    private void FixedUpdate()
+    {
+        _playerMovement.Move(input.Player.Movement.ReadValue<Vector2>());
     }
 }
