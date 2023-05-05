@@ -1,13 +1,17 @@
+using System;
+using Project._Scripts.Player;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 [SelectionBase]
 public class PlayerManager : MonoBehaviour
 {
-    private Inputs input;
 
     public Inventory playerInventory;
-    
+
+    private PlayerInputs _playerInput;
     private PlayerMovement _playerMovement;
+    private PlayerAnimator _playerAnimator;
     
     [Header("Test")]
     public ItemData test;
@@ -18,21 +22,16 @@ public class PlayerManager : MonoBehaviour
 
     private void Awake()
     {
+        _playerInput = GetComponent<PlayerInputs>();
         _playerMovement = GetComponent<PlayerMovement>();
         playerInventory = GetComponent<Inventory>();
+        _playerAnimator = GetComponent<PlayerAnimator>();
         
         
         DontDestroyOnLoad(this.gameObject);
     }
 
-    private void Start()
-    {
-        input = new Inputs();
-        input.Enable();
-
-        
-
-    }
+   
 
     [ContextMenu("Addto Inventoyr")]
     public void AddToInvenotryTest()
@@ -54,8 +53,13 @@ public class PlayerManager : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+        _playerAnimator.PlayAnimation(_playerInput.GetMoveDirection(), _playerInput.LastDirection);
+    }
+
     private void FixedUpdate()
     {
-        _playerMovement.Move(input.Player.Movement.ReadValue<Vector2>());
+        _playerMovement.Move(_playerInput.GetMoveDirection());
     }
 }
