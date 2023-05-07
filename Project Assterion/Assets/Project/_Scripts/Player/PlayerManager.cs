@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Project._Scripts.Characters;
 using Project._Scripts.Player;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,7 +19,10 @@ public class PlayerManager : MonoBehaviour
     public ItemData test;
     public ItemData test2;
     public ItemData test3;
-    
+
+
+    [Header("Characters")] 
+    public List<GameObject> characters;
 
 
     private void Awake()
